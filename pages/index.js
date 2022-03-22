@@ -3,12 +3,13 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 import Link from "next/link"
 import useMovies from '../hooks/useMovies'
+import {useState } from "react"
+import MovieCard from '../components/movie-card.component'
 export default function Home(){
 
-  // const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1)
 
-  const movies = useMovies()
-  console.log({movies: movies.data});
+  const movies = useMovies(page)
 
   return (
    
@@ -20,17 +21,18 @@ export default function Home(){
       </Head>
       <div className={styles.app}>
         {movies.data && movies.data.map(movie => (
-          <div className={styles.card} key={movie.id}>
-            <Image width={200} height={200} src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={movie.original_title} />
-            <h3 className={styles.movie__title}>{movie.original_title}</h3>
-            <p className={styles.movie__rating}>Rating: {movie.vote_average}</p>
-            <Link href={`/${movie.id}`}>see more</Link>
-          </div>
+          // <div className={styles.card} key={movie.id}>
+          //   <Image width={200} height={200} src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={movie.original_title} />
+          //   <h3 className={styles.movie__title}>{movie.original_title}</h3>
+          //   <p className={styles.movie__rating}>Rating: {movie.vote_average}</p>
+          //   <Link href={`/${movie.id}`}>see more</Link>
+          // </div>
+          <MovieCard key={movie.id} title={movie.original__title} poster={movie.poster_path} rating={movie.vote_average}id={movie.id} />
         ))}
-        {/* <div className={styles.navigation}>
+        <div className={styles.navigation}>
           {page > 1 && <button className={styles.navigation__button} onClick={() => setPage(page - 1)}>Prev Page</button>}
           <button className={styles.navigation__button} onClick={() => setPage(page + 1)}>Next Page</button>
-        </div> */}
+        </div>
       </div>
     </div>
   )

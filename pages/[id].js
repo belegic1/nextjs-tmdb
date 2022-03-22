@@ -1,21 +1,14 @@
-import styles from '../styles/Movie.module.scss'
-import {useRouter} from "next/router"
+import styles from '../styles/Movie.module.scss';
+import { useRouter } from 'next/router';
 import useMovie from '../hooks/useMovie';
 import useVideos from '../hooks/useVideos';
 
+export default function Movie() {
+  const router = useRouter();
+  const id = router.query.id;
+  const movie = useMovie(id);
+  const video = useVideos(id);
 
-
-export default function Movie(){
-  const router = useRouter()
-  const id = router.query.id
-  const movie = useMovie(id)
-  const video = useVideos(id)
-
-  if(video.data)
-  console.log({v:video.data.results[0]})
-
-
-  
   return (
     <div className={styles.movie__container}>
       <div className={styles.video__container}>
@@ -36,10 +29,11 @@ export default function Movie(){
         <>
           <h1 className={styles.movie__title}>{movie.data.original_title}</h1>
           <p className={styles.movie__description}>{movie.data.overview}</p>
-          <p className={styles.movie__rating}>Rating: {movie.data.vote_average}</p>
+          <p className={styles.movie__rating}>
+            Rating: {movie.data.vote_average}
+          </p>
         </>
       )}
     </div>
   );
-    
 }
